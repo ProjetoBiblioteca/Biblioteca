@@ -40,6 +40,9 @@ public class Livro extends ItemAcervo{
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-	
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 	
 }

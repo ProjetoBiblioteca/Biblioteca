@@ -1,6 +1,4 @@
 package br.ifrn.tads.poo.biblioteca.usuario;
-import java.util.*;
-
 import br.ifrn.tads.poo.biblioteca.acervo.ItemAcervo;
 
 public class Usuario {
@@ -13,6 +11,12 @@ public class Usuario {
 	/*----- Construtor ----- */
 	public Usuario() {
 		// TODO Auto-generated constructor stub
+	}
+	public Usuario(int codUsuario,String nome,String endereco,String cpf) {
+		this.codusuario=codUsuario;
+		this.nome=nome;
+		this.endereco=endereco;
+		this.cpf=cpf;
 	}
 	public void pagar(){
 	/*----- implementação ----- */
@@ -48,5 +52,9 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 	
+	@Override
+	public String toString() {		
+		return this.codusuario+"-"+this.nome+"-"+this.endereco+"-"+this.cpf;
+	}
 	
 }
