@@ -7,6 +7,15 @@ public class Apostila extends ItemAcervo {
 	private String autor;
 	private int quantidade;
 	
+	
+	public Apostila(double custo,String dataAluguel,String dataDevolucao,String codigoItem,boolean pago,String titulo,String autor,int quantidade) {
+	super();
+	this.titulo=titulo;
+	this.autor=autor;
+	this.quantidade=quantidade;
+	
+	}
+	
 	/*----- Métodos SET  e GET ----- */
 	public String getTitulo() {
 		return titulo;

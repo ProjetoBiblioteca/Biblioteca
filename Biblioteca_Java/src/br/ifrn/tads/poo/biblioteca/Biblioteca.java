@@ -27,6 +27,10 @@ public class Biblioteca {
 		usuarios.add(usuario);
 		System.out.println("Adicionado com Sucesso!");
 	}
+	public void addItemAcervo(ItemAcervo itemAcervo){
+		items.add(itemAcervo);
+		System.out.println("Adicionado com Sucesso!");
+	}
 	/* GET  e  SET NomeBiblioteca */
 	public String getNomeBiblioteca() {
 		return nomeBiblioteca;

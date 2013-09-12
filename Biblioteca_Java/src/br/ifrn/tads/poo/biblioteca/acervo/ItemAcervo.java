@@ -16,6 +16,14 @@ public class ItemAcervo {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public ItemAcervo(double custo2, Date dataAluguel2, Date dataDevolucao2,
+			List<String> codigoItem2, boolean pago2) {
+		this.custo=custo2;
+		this.dataAluguel=dataAluguel2;
+		this.codigoItem=codigoItem2;
+		this.pago=pago2;
+	}
+
 	public double getCusto() {
 		return custo;
 	}
@@ -71,6 +79,9 @@ public class ItemAcervo {
 	public Usuario reservar(Usuario u){
 		/*----- implementação ----- */
 	return u;
+	}
+	public String toString() {		
+		return this.custo+"-"+this.dataAluguel+"-"+this.dataDevolucao+"-"+this.codigoItem+"-"+this.pago;
 	}
 	
 }

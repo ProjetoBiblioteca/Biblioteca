@@ -9,6 +9,16 @@ public class Livro extends ItemAcervo{
 	private Integer edicao;
 	private int quantidade;
 	
+	public Livro(double custo,String dataAluguel,String dataDevolucao,String codigoItem,boolean pago,String titulo,String autor,String ISBN,Integer edicao,int quantidade) {
+		super();
+		this.titulo=titulo;
+		this.autor=autor;
+		this.ISBN=ISBN;
+		this.edicao=edicao;
+		this.quantidade=quantidade;
+		
+		}
+	
 	/*----- Método SET e  GET ----- */
 	public String getTitulo() {
 		return titulo;
