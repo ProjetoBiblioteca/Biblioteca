@@ -10,6 +10,7 @@ import br.ifrn.tads.poo.biblioteca.acervo.*;
 public class SistemaBiblioteca {
 		private static SistemaBiblioteca instance;
 		private Biblioteca biblioteca;
+	
 		
 		public static void main(String[] args) {
 			getInstance().Menu();
@@ -23,6 +24,38 @@ public class SistemaBiblioteca {
 				instance.biblioteca = new Biblioteca();
 			}
 			return instance;
+		}
+		private void excluirUsuario(){
+			Scanner op3 = new Scanner(System.in);
+			System.out.println("CPF do Usuário:");
+			String cpf = op3.nextLine();
+			
+			Usuario usuario = new Usuario('*',"", "", cpf);
+			int index = biblioteca.getUsuarios().lastIndexOf(usuario);
+			/*lastIndexOf : Pesquisas para a última ocorrência de um caractere ou substring.*/
+			if (index == -1) {	
+				System.out.println("Usuário não existe ");
+			}else{
+				biblioteca.removeUsuario(biblioteca.getUsuarios().get(index));
+				System.out.println("Usuário Removido com Sucesso");
+			}
+			Menu();
+		}	
+		private ItemAcervo buscarUmItemAcervo(){
+			Scanner op3 = new Scanner(System.in);
+			System.out.println("Código do Item Acervo:");
+			int codigoItem = op3.nextInt();
+			return biblioteca.getItensAcervo(codigoItem);
+		}
+		private void excluirItemAcervo(){
+			ItemAcervo itemAcervo = buscarUmItemAcervo();
+			if (itemAcervo == null) {
+				System.out.println("Não existe esse Item");
+			}else{
+				biblioteca.removeItemAcervo(itemAcervo);
+				System.out.println("Item Removido com Sucesso");
+			}
+			Menu();
 		}
 		
 		private void listarUsuarios(){
@@ -41,6 +74,7 @@ public class SistemaBiblioteca {
 				ListaDeItensAcervo += itemAcervo.toString()+"\n";
 			}
 			System.out.println(ListaDeItensAcervo);
+			Menu();
 		}
 		private void cadastrarUsuarios(){
 			Scanner op0 = new Scanner(System.in);
@@ -95,7 +129,7 @@ public class SistemaBiblioteca {
 			String dataDevolucao = li13.nextLine();
 			Scanner li14 = new Scanner(System.in);
 			System.out.println("Código Item:");
-			String codigoItem = li14.nextLine();
+			int codigoItem = li14.nextInt();
 
 			
 			Scanner li1 = new Scanner(System.in);
@@ -131,7 +165,7 @@ public class SistemaBiblioteca {
 			String dataDevolucao = ap13.nextLine();
 			Scanner ap14 = new Scanner(System.in);
 			System.out.println("Código Item:");
-			String codigoItem = ap14.nextLine();
+			int codigoItem = ap14.nextInt();
 			
 			Scanner ap1 = new Scanner(System.in);
 			System.out.println("Titulo:");
@@ -195,10 +229,10 @@ public class SistemaBiblioteca {
 				
 				break;
 			case 5:
-				
+				excluirUsuario();
 				break;
 			case 6:
-				
+				excluirItemAcervo();
 				break;
 			case 7:
 				

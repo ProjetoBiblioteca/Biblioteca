@@ -1,6 +1,10 @@
 package br.ifrn.tads.poo.biblioteca.acervo;
 import java.util.*;
 
+/**
+ * @author SuzyNerd
+ *
+ */
 public class Livro extends ItemAcervo{
 	
 	private String titulo;
@@ -9,8 +13,20 @@ public class Livro extends ItemAcervo{
 	private Integer edicao;
 	private int quantidade;
 	
-	public Livro(double custo,String dataAluguel,String dataDevolucao,String codigoItem,boolean pago,String titulo,String autor,String ISBN,Integer edicao,int quantidade) {
-		super();
+	/**
+	 * @param custo
+	 * @param dataAluguel
+	 * @param dataDevolucao
+	 * @param codigoItem
+	 * @param pago
+	 * @param titulo
+	 * @param autor
+	 * @param ISBN
+	 * @param edicao
+	 * @param quantidade
+	 */
+	public Livro(double custo,String dataAluguel,String dataDevolucao,int codigoItem,boolean pago,String titulo,String autor,String ISBN,Integer edicao,int quantidade) {
+		super(custo, dataAluguel, dataDevolucao, codigoItem, pago);
 		this.titulo=titulo;
 		this.autor=autor;
 		this.ISBN=ISBN;
@@ -18,6 +34,8 @@ public class Livro extends ItemAcervo{
 		this.quantidade=quantidade;
 		
 		}
+
+
 	
 	/*----- Método SET e  GET ----- */
 	public String getTitulo() {

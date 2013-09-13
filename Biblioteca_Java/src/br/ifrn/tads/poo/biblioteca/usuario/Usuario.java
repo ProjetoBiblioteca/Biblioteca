@@ -18,6 +18,11 @@ public class Usuario {
 		this.endereco=endereco;
 		this.cpf=cpf;
 	}
+	public Usuario(String nome,String endereco,String cpf) {
+		this.nome=nome;
+		this.endereco=endereco;
+		this.cpf=cpf;
+	}
 	public void pagar(){
 	/*----- implementação ----- */
 	}
@@ -50,6 +55,14 @@ public class Usuario {
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	public boolean equals(Object obj) {
+		Usuario usuario = (Usuario) obj;
+		if (usuario.cpf.equals(this.cpf))
+			return true;
+		else
+			return false;
+
 	}
 	
 	@Override

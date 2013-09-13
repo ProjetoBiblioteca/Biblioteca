@@ -16,6 +16,16 @@ public class Biblioteca {
 	public List<ItemAcervo> getItems() {
 		return items;
 	}
+	public ItemAcervo getItensAcervo(int codItem){ // Metodo get para receber um codigo do item e retornar o intem daquele codigo
+		ItemAcervo variItemAcervo =null;
+		for (ItemAcervo CodInteracao : items) {
+			if (CodInteracao.getCodigoItem()==codItem) {
+				variItemAcervo=CodInteracao;
+				break;
+			}
+		}
+		return variItemAcervo;
+	}
 	/*----- Construtor ----- */
 	public Biblioteca() {
 		this.usuarios = new ArrayList<Usuario>();
@@ -30,6 +40,12 @@ public class Biblioteca {
 	public void addItemAcervo(ItemAcervo itemAcervo){
 		items.add(itemAcervo);
 		System.out.println("Adicionado com Sucesso!");
+	}
+	public void removeUsuario(Usuario usuario){
+		usuarios.remove(usuario);
+	}
+	public void removeItemAcervo(ItemAcervo itemAcervo){
+		items.remove(itemAcervo);
 	}
 	/* GET  e  SET NomeBiblioteca */
 	public String getNomeBiblioteca() {

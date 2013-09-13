@@ -8,7 +8,7 @@ public class Apostila extends ItemAcervo {
 	private int quantidade;
 	
 	
-	public Apostila(double custo,String dataAluguel,String dataDevolucao,String codigoItem,boolean pago,String titulo,String autor,int quantidade) {
+	public Apostila(double custo,String dataAluguel,String dataDevolucao,int codigoItem,boolean pago,String titulo,String autor,int quantidade) {
 	super();
 	this.titulo=titulo;
 	this.autor=autor;
