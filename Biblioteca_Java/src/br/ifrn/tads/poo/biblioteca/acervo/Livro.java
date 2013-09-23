@@ -25,8 +25,8 @@ public class Livro extends ItemAcervo{
 	 * @param edicao
 	 * @param quantidade
 	 */
-	public Livro(double custo,String dataAluguel,String dataDevolucao,int codigoItem,boolean pago,String titulo,String autor,String ISBN,Integer edicao,int quantidade) {
-		super(custo, dataAluguel, dataDevolucao, codigoItem, pago);
+	public Livro(int codigoItemo,String titulo,String autor,String ISBN,Integer edicao,int quantidade) {
+		super (codigoItemo);
 		this.titulo=titulo;
 		this.autor=autor;
 		this.ISBN=ISBN;
@@ -70,7 +70,8 @@ public class Livro extends ItemAcervo{
 	}
 	public String toString() {
 		// TODO Auto-generated method stub
-		return super.toString();
+		//return super.toString();
+		return " Titulo :"+this.titulo+"  Autor :"+this.autor+"   ISBN :"+this.ISBN;
 	}
 	
 }

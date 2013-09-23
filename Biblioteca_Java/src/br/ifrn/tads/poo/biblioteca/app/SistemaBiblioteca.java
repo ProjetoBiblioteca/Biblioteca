@@ -1,5 +1,8 @@
 package br.ifrn.tads.poo.biblioteca.app;
 import java.util.*;
+import java.text.DateFormat;  
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import br.ifrn.tads.poo.biblioteca.usuario.Usuario;
 import br.ifrn.tads.poo.biblioteca.Biblioteca;
@@ -12,7 +15,7 @@ public class SistemaBiblioteca {
 		private Biblioteca biblioteca;
 	
 		
-		public static void main(String[] args) {
+		public static void main(String[] args) throws ParseException {
 			getInstance().Menu();
 		}
 		public SistemaBiblioteca(){
@@ -25,7 +28,15 @@ public class SistemaBiblioteca {
 			}
 			return instance;
 		}
-		private void excluirUsuario(){
+		
+		private ItemAcervo buscarUmItemAcervo(){ //BUSCAR ITEM DO ACERVO PELO CODIGO DO ITEM CADASTRADO  ---------
+			Scanner op3 = new Scanner(System.in);
+			System.out.println("Código do Item Acervo:");
+			int codigoItem = op3.nextInt();
+			return biblioteca.getItensAcervo(codigoItem);
+		}
+		
+		private void excluirUsuario() throws ParseException{ //EXCLUIR USUARIO -----------
 			Scanner op3 = new Scanner(System.in);
 			System.out.println("CPF do Usuário:");
 			String cpf = op3.nextLine();
@@ -41,14 +52,9 @@ public class SistemaBiblioteca {
 			}
 			Menu();
 		}	
-		private ItemAcervo buscarUmItemAcervo(){
-			Scanner op3 = new Scanner(System.in);
-			System.out.println("Código do Item Acervo:");
-			int codigoItem = op3.nextInt();
-			return biblioteca.getItensAcervo(codigoItem);
-		}
-		private void excluirItemAcervo(){
-			ItemAcervo itemAcervo = buscarUmItemAcervo();
+
+		private void excluirItemAcervo() throws ParseException{ // EXCLUIR ITEM DO ACERVO  ------
+			ItemAcervo itemAcervo = buscarUmItemAcervo(); // FAZ A BUSCA PRIMEIRO 
 			if (itemAcervo == null) {
 				System.out.println("Não existe esse Item");
 			}else{
@@ -58,7 +64,7 @@ public class SistemaBiblioteca {
 			Menu();
 		}
 		
-		private void listarUsuarios(){
+		private void listarUsuarios() throws ParseException{ // LISTAR USUARIOS CADASTRADOS ----- 
 			System.out.println("--- Lista de Usuários ---");
 			String ListaDeUsuarios="";
 			for(Usuario usuario : biblioteca.getUsuarios()){
@@ -67,16 +73,26 @@ public class SistemaBiblioteca {
 			System.out.println(ListaDeUsuarios);
 			Menu();
 		}
-		private void listarItemAcervo(){
+		private void listarItemAcervo() throws ParseException{ //LISTAR ITENS DO ACERVO ----
 			System.out.println("--- Lista de Itens Acervo ---");
 			String ListaDeItensAcervo="";
 			for (ItemAcervo itemAcervo : biblioteca.getItems()) {
-				ListaDeItensAcervo += itemAcervo.toString()+"\n";
+				ListaDeItensAcervo +="Código Item:"+itemAcervo.getCodigoItem()+itemAcervo.toString()+"\n";
 			}
+
 			System.out.println(ListaDeItensAcervo);
 			Menu();
 		}
-		private void cadastrarUsuarios(){
+		public void listarEmprestimos() throws ParseException{
+			System.out.println("--- Lista de Emprestimos ---");
+			String listaDeEmprestimos="";
+			for (Emprestimo emprestimo : biblioteca.getEmprestimo()) {
+				listaDeEmprestimos+=emprestimo.toString()+"\n";
+			}
+			System.out.println(listaDeEmprestimos);
+			Menu();
+		}
+		private void cadastrarUsuarios() throws ParseException{ // CADASTRAR USUÁRIO -----
 			Scanner op0 = new Scanner(System.in);
 			System.out.println("Código Usuário:");
 			int codusuario = op0.nextInt();
@@ -93,22 +109,22 @@ public class SistemaBiblioteca {
 			biblioteca.addUsuario(usuario);
 			Menu();
 		}
-		private void cadastrarItemAcervo(){
+		private void cadastrarItemAcervo() throws ParseException{ //CADASTRAR ITEM DO ACERVO ------
 			System.out.println("   1 - Livro");
 			System.out.println("   2 - Apostila");
 			System.out.println("   3 - Texto");
 			System.out.println("   * Opção : ");
 			Scanner opp = new Scanner(System.in);
-			int opitem = opp.nextInt();
+			int opitem = opp.nextInt(); // ESCOLHE O TIPO DO ITEM -----
 			switch (opitem) {
 			case 1:
-				adicionarLivro();
+				adicionarLivro(); // ADICIONAR  UM LIVRO -----
 				break;
 			case 2:
-				adicionarApostila();
+				adicionarApostila(); //ADICIONAR UMA APOSTILA ----
 				break;
 			case 3:
-				adicionarTexto();
+				adicionarTexto(); //ADICIONAR UM TEXTO ----
 				break;
 
 			default:
@@ -116,17 +132,30 @@ public class SistemaBiblioteca {
 				break;
 			}
 		}
-		private void adicionarLivro(){
+		private void cadastrarNovoEmprestimo() throws ParseException{ // CADASTRAR EMPRESTIMO --------
+			//------Ler o CPF do Usuário
+			Scanner opEmp = new Scanner(System.in);
+			System.out.println("CPF do Usuário:");
+			String cpf = opEmp.nextLine();
+			
+			//----- Procura o usuário pelo CPF  digitado
+			Usuario usuario = new Usuario('*',"", "", cpf);
+			int index = biblioteca.getUsuarios().lastIndexOf(usuario);
+			
+			
+			//DateFormat dataDevolucao = DateFormat.getInstance();
+			//Instanciar para ser  8 dias que será o prazo para devolver
+			
+			
+			Emprestimo emprestimo = new Emprestimo(biblioteca.getUsuarios().get(index));
+		    buscarUmItemAcervo();
+			biblioteca.getEmprestimo().add(emprestimo);
+			Menu();
+			
+		}
+		private void adicionarLivro() throws ParseException{ // ADICIONAR LIVRO --------
 			System.out.println("______ LIVRO________");
-			Scanner li11 = new Scanner(System.in);
-			System.out.println("Custo:");
-			double custo = li11.nextDouble();
-			Scanner li12 = new Scanner(System.in);
-			System.out.println("Data Aluguel:");
-			String dataAluguel = li12.nextLine();
-			Scanner li13 = new Scanner(System.in);
-			System.out.println("Data Devolução:");
-			String dataDevolucao = li13.nextLine();
+
 			Scanner li14 = new Scanner(System.in);
 			System.out.println("Código Item:");
 			int codigoItem = li14.nextInt();
@@ -148,21 +177,14 @@ public class SistemaBiblioteca {
 			System.out.println("Quantidade:");
 			int  quantidade = li5.nextInt();	
 
-			ItemAcervo itemAcervo = new Livro(custo, dataAluguel, dataDevolucao, codigoItem, true, titulo, autor, isbn, edicao, quantidade);
+			ItemAcervo itemAcervo = new Livro( codigoItem, titulo, autor, isbn, edicao, quantidade);
+			
 			biblioteca.addItemAcervo(itemAcervo);
 			Menu();
 		}
-		private void adicionarApostila(){
+		private void adicionarApostila() throws ParseException{ //  ADICIONAR APOSTILA -------
 			System.out.println("______ APOSTILA________");
-			Scanner ap11 = new Scanner(System.in);
-			System.out.println("Custo:");
-			double custo = ap11.nextDouble();
-			Scanner ap12 = new Scanner(System.in);
-			System.out.println("Data Aluguel:");
-			String dataAluguel = ap12.nextLine();
-			Scanner ap13 = new Scanner(System.in);
-			System.out.println("Data Devolução:");
-			String dataDevolucao = ap13.nextLine();
+			
 			Scanner ap14 = new Scanner(System.in);
 			System.out.println("Código Item:");
 			int codigoItem = ap14.nextInt();
@@ -176,18 +198,19 @@ public class SistemaBiblioteca {
 			Scanner ap3 = new Scanner(System.in);
 			System.out.println("Quantidade:");
 			int  quantidade = ap3.nextInt();
-			ItemAcervo itemAcervo = new Apostila(custo, dataAluguel, dataDevolucao, codigoItem, true, titulo, autor, quantidade);
+			ItemAcervo itemAcervo = new Apostila(codigoItem, titulo, autor, quantidade);
 			biblioteca.addItemAcervo(itemAcervo);
 			Menu();
 		}
-		private void adicionarTexto(){
+		private void adicionarTexto() throws ParseException{ // ADICIONAR TEXTO  --------------
 			System.out.println("______ TEXTO________");
 			Scanner aut1 = new Scanner(System.in);
 			System.out.println("Autor:");
 			String autor = aut1.nextLine();
 			Menu();
 		}
-		public void  Menu(){
+		public void  Menu() throws ParseException{ // Menu de opção possiveis do meu sistema de controle de biblioteca --------------
+			System.out.println("__________________________________________");
 			System.out.println("       Desenvolvido por Suzy e Renno");
 			System.out.println("=========== SISTEMA BIBLIOTECA ===========");
 			System.out.println("      1 - Cadastrar Novo Usuário");
@@ -205,33 +228,33 @@ public class SistemaBiblioteca {
 			System.out.println("     13 - Listar Item Acervo");
 			System.out.println("     14 - Listar Empréstimos");
 			System.out.println("      0 - SAIR");
-			System.out.println("=========================================");
+			System.out.println("__________________________________________");
 			
 			Scanner op = new Scanner(System.in);
 			System.out.println("Digite a opção:");
 			int opcao = op.nextInt();
-			menuOpcao(opcao);
+			menuOpcao(opcao); // chama o menu opção levando como parametro a opção digitada --------------
 
 		}
-		private  void menuOpcao(int opcao){
+		private  void menuOpcao(int opcao) throws ParseException{ // Chama um método de uma determinada funcão do Menu --------------
 			
 			switch (opcao) {
-			case 1:// Cadastrar um novo usuario
+			case 1:// Cadastrar um novo usuario ------
 				cadastrarUsuarios();
 				break;
-			case 2:// Cadastrar um Item do Acervo
+			case 2:// Cadastrar um Item do Acervo ------
 				cadastrarItemAcervo();
 				break;
-			case 3:// Cadastrar um novo Emprestimo
-				//cadastrarNovoEmprestimo();
+			case 3:// Cadastrar um novo Emprestimo ----------
+				cadastrarNovoEmprestimo();
 				break;
 			case 4:
 				
 				break;
-			case 5:
+			case 5: // Excluir Usuário ----------
 				excluirUsuario();
 				break;
-			case 6:
+			case 6: // Excluir um Item do acervo pelo código do Item ---------
 				excluirItemAcervo();
 				break;
 			case 7:
@@ -249,15 +272,15 @@ public class SistemaBiblioteca {
 			case 11:
 				
 				break;
-			case 12://Listar Usuários
+			case 12://Listar Usuários -----------
 				listarUsuarios();
 				
 				break;
-			case 13://Listar Itens Acervo
+			case 13://Listar Itens Acervo -----------
 				listarItemAcervo();
 				break;
 			case 14:
-				
+				listarEmprestimos();
 				break;	
 			case 15:
 				
