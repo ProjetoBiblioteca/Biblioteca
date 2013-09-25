@@ -211,7 +211,7 @@ public class SistemaBiblioteca {
 		}
 		public void  Menu() throws ParseException{ // Menu de opção possiveis do meu sistema de controle de biblioteca --------------
 			System.out.println("__________________________________________");
-			System.out.println("       Desenvolvido por Suzy e Renno");
+			System.out.println("       Desenvolvido por Suzy e Renno Garcia");
 			System.out.println("=========== SISTEMA BIBLIOTECA ===========");
 			System.out.println("      1 - Cadastrar Novo Usuário");
 			System.out.println("      2 - Cadastrar Novo Item Acervo");
