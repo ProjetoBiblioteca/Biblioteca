@@ -1,13 +1,12 @@
 package br.ifrn.tads.poo.biblioteca.acervo;
-import java.text.DateFormat;
-import java.util.*;
 
-import br.ifrn.tads.poo.biblioteca.usuario.Usuario;
+import br.ifrn.tads.poo.biblioteca.Biblioteca;
+
 
 public class ItemAcervo  {
 	private int codigoItem; 
 	private Livro livro;
-	private Emprestimo itensEmprestimo;
+	private Biblioteca bilio;
 
 
 	/*----- Construtor ----- */
@@ -21,7 +20,7 @@ public class ItemAcervo  {
 
 	}
 	
-	public int getCodigoItem() {
+	public int getCodigoItem() { // Retorna o Código do item
 		return codigoItem;
 	}
 
@@ -29,13 +28,13 @@ public class ItemAcervo  {
 		this.codigoItem = codigoItem;
 	}
 
+	public Biblioteca getItensAcervo(){
+		return bilio;
+	}
 	
 	public String toString() {
 		return "Código Item:"+codigoItem+""+livro.toString();
 	}
 
-	public Emprestimo getItensAcervo(){
-		return itensEmprestimo;
-	}
 	
 }

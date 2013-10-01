@@ -3,6 +3,8 @@ package br.ifrn.tads.poo.biblioteca.acervo;
 import java.util.Date;
 import java.util.List;
 
+import org.omg.CORBA.DATA_CONVERSION;
+
 import br.ifrn.tads.poo.biblioteca.usuario.Usuario;
 
 public class Emprestimo {
@@ -11,10 +13,14 @@ public class Emprestimo {
 	private Date dataAluguel;
 	private Date dataDevolucao;
 	private Usuario usuario; //Atributo usuario da classe usuario que irá precisar na hora do emprestimo de um item do acervo
+	private ItemAcervo itensEmp;
 	private List<ItemAcervo>itensDeEmprestimoAcervos;
 	
-	public Emprestimo(Usuario usuario){
+	
+	public Emprestimo(Usuario usuario,Date dataAluguel, Date dataDevolucao){
 		this.usuario = usuario; 
+		this.dataAluguel = dataAluguel;
+		this.dataDevolucao = dataDevolucao;
 		//Instanciando objeto ,classe IntensEmprestadoArray que herda uma ArrayList de Itens Emprestados
 		this.itensDeEmprestimoAcervos = new ItensEmprestadoArray();
 	}
@@ -77,10 +83,9 @@ public class Emprestimo {
 	
 	@Override
 	public String toString() {
-		String toString = "Usuário:"+usuario.toString();
+		String toString = "Usuário:"+usuario.toString()+"-- \n"+"Data Aluguel:"+dataAluguel+" \n"+"Data Devolução:"+dataDevolucao;
 		for(ItemAcervo item : itensDeEmprestimoAcervos){
-			toString += "item"+item.getItensAcervo().toString()+"\n";
-			System.out.println("----################ ENTROU");
+			toString += "Item"+item.getItensAcervo().toString()+"\n";			
 		}
 		return toString;
 	}

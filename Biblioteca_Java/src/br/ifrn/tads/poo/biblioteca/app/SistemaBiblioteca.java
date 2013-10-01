@@ -7,12 +7,13 @@ import java.text.SimpleDateFormat;
 import br.ifrn.tads.poo.biblioteca.usuario.Usuario;
 import br.ifrn.tads.poo.biblioteca.Biblioteca;
 import br.ifrn.tads.poo.biblioteca.acervo.*;
-
+import br.ifrn.tads.poo.biblioteca.ado.usuarioDao;
 
 
 public class SistemaBiblioteca {
 		private static SistemaBiblioteca instance;
 		private Biblioteca biblioteca;
+	
 	
 		
 		public static void main(String[] args) throws ParseException {
@@ -22,6 +23,7 @@ public class SistemaBiblioteca {
 			
 		}
 		public static SistemaBiblioteca getInstance() {
+			//O método getInstance retornar a instancia de um objeto para uma possível comparação
 			if (instance == null) {
 				instance = new SistemaBiblioteca();
 				instance.biblioteca = new Biblioteca();
@@ -71,6 +73,9 @@ public class SistemaBiblioteca {
 				ListaDeUsuarios += usuario.toString()+"\n";
 			}
 			System.out.println(ListaDeUsuarios);
+			System.out.println("--Lista de Usuários do Banco de Dados \n");
+			usuarioDao dao1 = new usuarioDao();
+			dao1.gerAll();
 			Menu();
 		}
 		private void listarItemAcervo() throws ParseException{ //LISTAR ITENS DO ACERVO ----
@@ -107,6 +112,9 @@ public class SistemaBiblioteca {
 			String cpf = op3.nextLine();	
 			Usuario usuario = new Usuario(codusuario,nome,endereco,cpf);	
 			biblioteca.addUsuario(usuario);
+			usuarioDao dao = new usuarioDao();
+			dao.cadastrar(usuario);
+			
 			Menu();
 		}
 		private void cadastrarItemAcervo() throws ParseException{ //CADASTRAR ITEM DO ACERVO ------
@@ -133,6 +141,18 @@ public class SistemaBiblioteca {
 			}
 		}
 		private void cadastrarNovoEmprestimo() throws ParseException{ // CADASTRAR EMPRESTIMO --------
+			Scanner emp1 = new Scanner(System.in);
+			System.out.println("Data Aluguel:");
+			String dataAluguel = emp1.nextLine();
+			DateFormat da = new SimpleDateFormat("dd/MM/yyyy");
+			Date dta = da.parse(dataAluguel);
+			
+			Scanner emp2 = new Scanner(System.in);
+			System.out.println("Data Devolução:");
+			String dataDevolucao = emp2.nextLine();
+			DateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
+			Date dtd = dd.parse(dataDevolucao);
+			
 			//------Ler o CPF do Usuário
 			Scanner opEmp = new Scanner(System.in);
 			System.out.println("CPF do Usuário:");
@@ -147,8 +167,9 @@ public class SistemaBiblioteca {
 			//Instanciar para ser  8 dias que será o prazo para devolver
 			
 			
-			Emprestimo emprestimo = new Emprestimo(biblioteca.getUsuarios().get(index));
+			Emprestimo emprestimo = new Emprestimo(biblioteca.getUsuarios().get(index),dta,dtd);
 		    buscarUmItemAcervo();
+		    
 			biblioteca.getEmprestimo().add(emprestimo);
 			Menu();
 			
@@ -211,7 +232,7 @@ public class SistemaBiblioteca {
 		}
 		public void  Menu() throws ParseException{ // Menu de opção possiveis do meu sistema de controle de biblioteca --------------
 			System.out.println("__________________________________________");
-			System.out.println("       Desenvolvido por Suzy e Renno Garcia");
+			System.out.println("       Desenvolvido por Suzy e Renno");
 			System.out.println("=========== SISTEMA BIBLIOTECA ===========");
 			System.out.println("      1 - Cadastrar Novo Usuário");
 			System.out.println("      2 - Cadastrar Novo Item Acervo");
@@ -220,14 +241,13 @@ public class SistemaBiblioteca {
 			System.out.println("      5 - Excluir Usuário");
 			System.out.println("      6 - Excluir Item Acervo");
 			System.out.println("      7 - Excluir Empréstimo");
-			System.out.println("      8 - Excluir um Item Empréstimo");
-			System.out.println("      9 - Devolver -TODOS- Itens de um Empréstimo");
-			System.out.println("     10 - Devolver -UM- Item do Empréstimo");
-			System.out.println("     11 - Pesquisar Item por Título");
-			System.out.println("     12 - Listar Usuários");
-			System.out.println("     13 - Listar Item Acervo");
-			System.out.println("     14 - Listar Empréstimos");
-			System.out.println("      0 - SAIR");
+			System.out.println("      8 - Devolver -TODOS- Itens de um Empréstimo");
+			System.out.println("      9 - Devolver -UM- Item do Empréstimo");
+			System.out.println("     10 - Pesquisar Item por Título");
+			System.out.println("     11 - Listar Usuários");
+			System.out.println("     12 - Listar Item Acervo");
+			System.out.println("     13 - Listar Empréstimos");
+			System.out.println("     14 - SAIR");
 			System.out.println("__________________________________________");
 			
 			Scanner op = new Scanner(System.in);
@@ -269,23 +289,16 @@ public class SistemaBiblioteca {
 			case 10:
 				
 				break;
-			case 11:
-				
-				break;
-			case 12://Listar Usuários -----------
+			case 11://Listar Usuários -----------
 				listarUsuarios();
-				
 				break;
-			case 13://Listar Itens Acervo -----------
-				listarItemAcervo();
+			case 12://Listar Itens Acervo -----------
+				listarItemAcervo();				
+				break;
+			case 13:
+				listarEmprestimos();
 				break;
 			case 14:
-				listarEmprestimos();
-				break;	
-			case 15:
-				
-				break;
-			case 0:
 				System.exit(0);
 				break;
 			default:
