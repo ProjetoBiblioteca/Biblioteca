@@ -4,8 +4,8 @@ import java.util.*;
 public class Texto extends ItemAcervo{
 	private String autor;
 	
-	public Texto(double custo,Date dataAluguel,Date dataDevolucao,int codigoItem,boolean pago,String autor) {
-		super(custo,dataAluguel,dataDevolucao,codigoItem,pago);
+	public Texto(int codigoItem,String autor) {
+		super(codigoItem);
 		this.autor=autor;		
 		}
 
@@ -19,5 +19,10 @@ public class Texto extends ItemAcervo{
 		this.autor = autor;
 	}
 	
+	public String toString() {
+		// TODO Auto-generated method stub
+		//return super.toString();
+		return "  Autor :"+this.autor;
+	}
 	
 }

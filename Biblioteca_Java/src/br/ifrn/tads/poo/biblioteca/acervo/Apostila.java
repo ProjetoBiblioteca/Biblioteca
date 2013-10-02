@@ -8,8 +8,8 @@ public class Apostila extends ItemAcervo {
 	private int quantidade;
 	
 	
-	public Apostila(int codigoItem,String titulo,String autor,int quantidade) {
-	super();
+	public Apostila(int codItem,String titulo,String autor,int quantidade) {
+	super(codItem);
 	this.titulo=titulo;
 	this.autor=autor;
 	this.quantidade=quantidade;
@@ -36,5 +36,9 @@ public class Apostila extends ItemAcervo {
 		this.quantidade = quantidade;
 	}
 	
-	
+	public String toString() {
+		// TODO Auto-generated method stub
+		//return super.toString();
+		return " Titulo :"+this.titulo+"  Autor :"+this.autor+"   Quantidade :"+this.quantidade;
+	}
 }

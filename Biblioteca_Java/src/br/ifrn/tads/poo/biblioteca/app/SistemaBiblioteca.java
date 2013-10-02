@@ -73,6 +73,8 @@ public class SistemaBiblioteca {
 				ListaDeUsuarios += usuario.toString()+"\n";
 			}
 			System.out.println(ListaDeUsuarios);
+			
+			// Listar usuários cadastrados no Bando de Dados
 			System.out.println("--Lista de Usuários do Banco de Dados \n");
 			usuarioDao dao1 = new usuarioDao();
 			dao1.gerAll();
@@ -112,6 +114,7 @@ public class SistemaBiblioteca {
 			String cpf = op3.nextLine();	
 			Usuario usuario = new Usuario(codusuario,nome,endereco,cpf);	
 			biblioteca.addUsuario(usuario);
+			// cadastrar Usuário no Banco de Dados
 			usuarioDao dao = new usuarioDao();
 			dao.cadastrar(usuario);
 			
@@ -225,9 +228,17 @@ public class SistemaBiblioteca {
 		}
 		private void adicionarTexto() throws ParseException{ // ADICIONAR TEXTO  --------------
 			System.out.println("______ TEXTO________");
+			
+			Scanner txt14 = new Scanner(System.in);
+			System.out.println("Código Item:");
+			int codigoItem = txt14.nextInt();
+			
 			Scanner aut1 = new Scanner(System.in);
 			System.out.println("Autor:");
 			String autor = aut1.nextLine();
+			ItemAcervo itemAcervo = new Texto(codigoItem, autor);
+			biblioteca.addItemAcervo(itemAcervo);
+			
 			Menu();
 		}
 		public void  Menu() throws ParseException{ // Menu de opção possiveis do meu sistema de controle de biblioteca --------------
